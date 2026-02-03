@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace KlinketStudiosTools
 {
-    public interface IDependencyProvider {}
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
     public sealed class InjectAttribute : Attribute {}
@@ -35,13 +34,13 @@ namespace KlinketStudiosTools
         {
             base.Awake();
 
-            var providers = FindMonoBehaviours().OfType<IDependencyProvider>();
+            var providers = FindMonoBehaviours().Where(IsProvider);
             foreach (var provider in providers)
             {
                 RegisterProvider(provider);
             }
 
-            var nameSpecificProviders = FindMonoBehaviours().OfType<IDependencyProvider>();
+            var nameSpecificProviders = FindMonoBehaviours().Where(IsNameSpecificProvider);
             foreach (var provider in nameSpecificProviders)
             { 
                 NameSpecificRegisterProvider(provider);
@@ -77,6 +76,34 @@ namespace KlinketStudiosTools
                 injectableFeild.SetValue(instance,resolvedInstance);
                 print($"Injected {fieldType.Name} into {type.Name}");
             }
+
+            var methods = type.GetMethods(bindingFlags)
+                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
+
+            foreach (var method in methods)
+            {
+                var methodTypes = method.GetParameters();
+                var resolvedInstances = new List<object>();
+                foreach (var parameter in methodTypes)
+                {
+                    var resolvedInstance = Resolve(parameter.GetType());
+                    if (resolvedInstance == null)
+                    {
+                        throw new Exception($"Failed to inject{parameter.Name} into {parameter.GetType().Name}");
+                    }
+
+                    
+                    resolvedInstances.Add(resolvedInstance);
+                }
+
+                Action<object> listener = (value) =>
+                {
+                    method.Invoke(instance, resolvedInstances.ToArray());
+                };
+                
+            }
+
+
         }
         
         void NameSpecificInject(object instance)
@@ -114,13 +141,23 @@ namespace KlinketStudiosTools
             var members = obj.GetType().GetMembers(bindingFlags);
             return members.Any(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
         }
+        static bool IsProvider(MonoBehaviour obj)
+        {
+            var members = obj.GetType().GetMembers(bindingFlags);
+            return members.Any(member => Attribute.IsDefined(member, typeof(ProvideAttribute)));
+        }
+        static bool IsNameSpecificProvider(MonoBehaviour obj)
+        {
+            var members = obj.GetType().GetMembers(bindingFlags);
+            return members.Any(member => Attribute.IsDefined(member, typeof(NameSpecificProvideAttribute)));
+        }
         static bool IsNameSpecificInjectable(MonoBehaviour obj)
         {
             var members = obj.GetType().GetMembers(bindingFlags);
             return members.Any(member => Attribute.IsDefined(member, typeof(NameSpecificInjectAttribute)));
         }
         
-        void RegisterProvider(IDependencyProvider provider)
+        void RegisterProvider(MonoBehaviour provider)
         {
             var methods = provider.GetType().GetMethods(bindingFlags);
             foreach (var method in methods)
@@ -162,7 +199,7 @@ namespace KlinketStudiosTools
             }
         }
         
-        void NameSpecificRegisterProvider(IDependencyProvider provider)
+        void NameSpecificRegisterProvider(MonoBehaviour provider)
         {
             var methods = provider.GetType().GetMethods(bindingFlags);
             foreach (var method in methods)
