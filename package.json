@@ -1,0 +1,11 @@
+{
+  "name": "com.klinketstudios.klinketstudiostools",
+  "version": "1.0.0",
+  "displayName": "KlinketStudiosTools",
+  "description": "Base files and tools for the development in KlinketStudios projects",
+  "unity": "2019.1",
+  "author": {
+    "name": "klinketStudios"
+  },
+  "_fingerprint": "e6555147a4aa7b141a8f21c372d6af376b337d3e"
+}
