@@ -1,11 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using Unity.Android.Gradle.Manifest;
 using UnityEditor;
 using UnityEditor.PackageManager.Requests;
 using UnityEditor.PackageManager;
-using UnityEditor.VersionControl;
 using static System.IO.Path;
 using static UnityEditor.AssetDatabase;
 using Application = UnityEngine.Application;
@@ -68,10 +66,10 @@ public static class ProjectSetup
         Assets.DeleteAsset("", "Readme.asset");
         Assets.MoveAsset("InputSystem_Actions.inputactions", "Input/InputSystem_Actions.inputactions");
         
-        var request = Client.Embed("com.klinketstudios.klinketstudiostools");
+        //var request = Client.Embed("com.klinketstudios.klinketstudiostools");
 
-        while(!request.IsCompleted) 
-            await Task.Delay(10);
+        //while(!request.IsCompleted) 
+        //    await Task.Delay(10);
         
         //MoveAsset("Packages/com.klinketstudios.klinketstudiostools/Assets/KlinketStudiosTools", "Assets/KlinketStudiosTools");
         Refresh();
@@ -83,7 +81,7 @@ public static class ProjectSetup
         {
             //string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
             string basePath = GetDirectoryName(Application.dataPath);
-            string assetsFolder = Combine(basePath, "Library/PackageCache/com.klinketstudios.klinketstudiostools@ce97af2da60f/Packages/AssetsStoreAssets");
+            string assetsFolder = Combine(basePath,  GetFullPath("Packages/com.klinketstudios.klinketstudiostools"),"Packages/AssetsStoreAssets");
             ImportPackage(Combine(assetsFolder, folder, asset), false);
         }
 
