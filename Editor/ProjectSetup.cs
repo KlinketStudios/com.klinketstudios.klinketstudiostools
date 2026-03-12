@@ -83,7 +83,7 @@ public static class ProjectSetup
         {
             //string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
             string basePath = GetDirectoryName(Application.dataPath);
-            string assetsFolder = Combine(basePath, "com.klinketstudios.klinketstudiostools/Packages/AssetsStoreAssets");
+            string assetsFolder = Combine(basePath, "Packages/com.klinketstudios.klinketstudiostools/Packages/AssetsStoreAssets");
             ImportPackage(Combine(assetsFolder, folder, asset), false);
         }
 
