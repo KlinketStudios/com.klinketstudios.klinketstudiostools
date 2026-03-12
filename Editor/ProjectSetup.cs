@@ -49,9 +49,11 @@ public static class ProjectSetup
     public static async void CreateFolders()
     {
         Folders.Create(
-            "Animations", 
-            "Mats", 
-            "Prefabs", 
+            "Animations",
+            "Mats",
+            "Prefabs",
+            "Sprites",
+            "Textures",
             "Scripts/ScriptableObjectScripts", 
             "ScriptableObjects",
             "Models/textures",
