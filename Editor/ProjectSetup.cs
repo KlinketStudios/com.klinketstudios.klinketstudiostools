@@ -13,7 +13,7 @@ public static class ProjectSetup
 {
     
     
-    [MenuItem("Tools/Setup/Import Essentials/Step 1")]
+    [MenuItem("Tools/Setup/Import Essentials/Step 2")]
     static void ImportEssentials()
     {
         Assets.ImportAsset("TimeScale Toolbar.unitypackage","bl4st/Editor ExtensionsUtilities");
@@ -24,7 +24,7 @@ public static class ProjectSetup
         Packages.InstallPackages(new[] { "com.unity.cinemachine" });
     }
     
-    [MenuItem("Tools/Setup/Import Essentials/Step 2")]
+    [MenuItem("Tools/Setup/Import Essentials/Step 3")]
     static void MoveImportedEssentials()
     {
         Folders.Create("AssetPackages");
@@ -45,7 +45,7 @@ public static class ProjectSetup
         Assets.ImportCustomLocalPackage("Assets/KlinketStudiosTools/Packages/MLAgents.unitypackage");
     }
 
-    [MenuItem("Tools/Setup/Create Folders")]
+    [MenuItem("Tools/Setup/Import Essentials/Step 1")]
     public static async void CreateFolders()
     {
         Folders.Create(
@@ -79,8 +79,9 @@ public static class ProjectSetup
     {
         public static void ImportAsset(string asset, string folder)
         {
-            string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            string assetsFolder = Combine(basePath, "Unity/Asset Store-5.x");
+            //string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+            string basePath = Application.dataPath;
+            string assetsFolder = Combine(basePath, "Packages/com.klinketstudios.klinketstudiostools/Packages/AssetsStoreAssets");
             ImportPackage(Combine(assetsFolder, folder, asset), false);
         }
 
