@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using Unity.Android.Gradle.Manifest;
 using UnityEditor;
 using UnityEditor.PackageManager.Requests;
 using UnityEditor.PackageManager;
+using UnityEditor.VersionControl;
 using static System.IO.Path;
 using static UnityEditor.AssetDatabase;
 using Application = UnityEngine.Application;
@@ -80,8 +82,8 @@ public static class ProjectSetup
         public static void ImportAsset(string asset, string folder)
         {
             //string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            string basePath = Application.dataPath;
-            string assetsFolder = Combine(basePath, "Packages/com.klinketstudios.klinketstudiostools/Packages/AssetsStoreAssets");
+            string basePath = GetDirectoryName(Application.dataPath);
+            string assetsFolder = Combine(basePath, "com.klinketstudios.klinketstudiostools/Packages/AssetsStoreAssets");
             ImportPackage(Combine(assetsFolder, folder, asset), false);
         }
 
