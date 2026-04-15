@@ -1,6 +1,6 @@
 {
   "name": "com.klinketstudios.klinketstudiostools",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "displayName": "KlinketStudiosTools",
   "description": "Base files and tools for the development in KlinketStudios projects",
   "unity": "2019.1",
