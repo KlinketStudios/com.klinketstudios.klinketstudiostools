@@ -51,6 +51,7 @@ public static class ProjectSetup
         Assets.ImportAsset("In-game Debug Console.unitypackage","yasirkula/ScriptingGUI");
         Assets.ImportAsset("Smart Console.unitypackage","EdgarDev/Editor ExtensionsUtilities");
         Assets.ImportAsset("Hot Reload Edit Code Without Compiling.unitypackage","The Naughty Cult/Editor ExtensionsUtilities");
+        Assets.ImportAsset("LeanTween.unitypackage","Dented Pixel/ScriptingAnimation");
         Packages.InstallPackages(new[] { "com.unity.cinemachine" });
         string packagePath = TMP_EditorUtility.packageFullPath + "/Package Resources/TMP Essential Resources.unitypackage";
         ImportPackage(packagePath, false);
@@ -63,6 +64,7 @@ public static class ProjectSetup
         Refresh();
         Folders.Move("AssetPackages", "bl4st");
         Folders.Move("AssetPackages", "vHierarchy");
+        Folders.Move("AssetPackages", "LeanTween");
     
         Refresh();
     }
