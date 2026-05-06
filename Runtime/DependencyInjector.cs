@@ -23,17 +23,15 @@ namespace KlinketStudiosTools
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
     public sealed class NameSpecificProvideAttribute : Attribute {}
 
-    public class DependencyInjector : Singlton<DependencyInjector>
+    public class DependencyInjector : MonoBehaviour
     {
         const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
         
         readonly Dictionary<Type, object> registry = new Dictionary<Type, object>();
         readonly Dictionary<string, object> nameSpecificRegistry = new Dictionary<string, object>();
         
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-
             var providers = FindMonoBehaviours().Where(IsProvider);
             foreach (var provider in providers)
             {
