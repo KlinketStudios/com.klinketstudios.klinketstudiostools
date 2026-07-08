@@ -55,6 +55,7 @@ public static class ProjectSetup
         Packages.InstallPackages(new[] { "com.unity.cinemachine" });
         string packagePath = TMP_EditorUtility.packageFullPath + "/Package Resources/TMP Essential Resources.unitypackage";
         ImportPackage(packagePath, false);
+        Refresh();
     }
     
     [MenuItem("Tools/Setup/Import Essentials/Step 3")]
